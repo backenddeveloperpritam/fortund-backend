@@ -61,9 +61,9 @@ const changeStatus = asyncHandler(async (req, res) => {
 const deleteSubSkill = asyncHandler(async (req, res) => {
     const { subskillId } = req.body;
     const result = await subSkillService.deleteSubSkill(subskillId);
-   
+
     return res.status(200).json(new ApiResponse(200, {}, "Sub - Skills delleted successfully"));
 })
 
 
-export { subSkillsList, getSubSkillById, addNewSubSkill, updateSubSkill, changeStatus ,deleteSubSkill};
+export { subSkillsList, getSubSkillById, addNewSubSkill, updateSubSkill, changeStatus, deleteSubSkill };

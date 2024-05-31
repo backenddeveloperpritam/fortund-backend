@@ -3,11 +3,29 @@ import Skill from "../models/adminModel/Skills.js";
 import { uploadOnCloudinary, deleteFromCloudinary } from "../utils/cloudinary.js"
 
 const getSkills = async () => {
-
-    const skills = await Skill.find({});
-    return skills;
-
+    // const skills = await Skill.find({});
+    // return skills;
+    const skillsWithCount = await Skill.aggregate([
+        {
+            $lookup: {
+                from: "SubSkills",
+                localField: "_id",
+                foreignField: "skill",
+                as: "subSkills"
+            }
+        },
+        {
+            $project: {
+                _id: 1,
+                title: 1,
+                status: 1,
+                subSkillsCount: { $size: "$subSkills" }
+            }
+        }
+    ]);
+    return skillsWithCount;
 };
+
 const getSkillById = async (id) => {
     const skill = await Skill.findOne({ _id: id });
     if (!skill) {
@@ -126,11 +144,11 @@ const updateImage = async (body, file) => {
 const deleteSkill = async (skillId) => {
     const updatedSkill = await Skill.findByIdAndUpdate(
         skillId,
-        { isDeleted: 1 }, 
+        { isDeleted: 1 },
         { new: true }
     );
 
     return updatedSkill;
 };
 
-export { getSkills, addNewSkill, getSkillById, changeStatus, updateSkill, updateImage,deleteSkill };
+export { getSkills, addNewSkill, getSkillById, changeStatus, updateSkill, updateImage, deleteSkill };
