@@ -10,6 +10,7 @@ import astrologerRoute from "./routes/admin/astrologer.route.js";
 import SkillRoute from "./routes/admin/skill.route.js";
 import SubSkillRoute from "./routes/admin/subSkill.route.js";
 import ExpertiesRoute from "./routes/admin/expertise.route.js";
+import RemediesRoute from "./routes/admin/remedies.route.js";
 
 import cors from "cors";
 import { createServer } from "http";
@@ -47,6 +48,7 @@ app.use('/api/admin', blogCategoryRoute);
 app.use('/api/admin', SkillRoute);
 app.use('/api/admin', SubSkillRoute);
 app.use('/api/admin', ExpertiesRoute);
+app.use('/api/admin', RemediesRoute);
 
 httpServer.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
