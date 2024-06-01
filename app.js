@@ -11,6 +11,8 @@ import SkillRoute from "./routes/admin/skill.route.js";
 import SubSkillRoute from "./routes/admin/subSkill.route.js";
 import ExpertiesRoute from "./routes/admin/expertise.route.js";
 import RemediesRoute from "./routes/admin/remedies.route.js";
+import CountryRoute from "./routes/admin/country.route.js";
+import StateRoute from "./routes/admin/state.route.js";
 
 import cors from "cors";
 import { createServer } from "http";
@@ -49,6 +51,8 @@ app.use('/api/admin', SkillRoute);
 app.use('/api/admin', SubSkillRoute);
 app.use('/api/admin', ExpertiesRoute);
 app.use('/api/admin', RemediesRoute);
+app.use('/api/admin', CountryRoute);
+app.use('/api/admin', StateRoute);
 
 httpServer.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

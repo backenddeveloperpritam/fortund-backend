@@ -13,12 +13,18 @@ const getBlogCategoryById = async (id) => {
 }
 
 const addNewBlogCategory = async (title, status) => {
-    const video = await BlogsCategory.create({
+    const blogCagegory = await BlogsCategory.create({
         title,
         status
     });
 
-    return video;
+    return blogCagegory;
+}
+
+
+const updateBlogCategory = async (blogCategoryId, updateData) => {
+    const blogCagegory = await BlogsCategory.findByIdAndUpdate(blogCategoryId, updateData, { new: true });
+    return blogCagegory;
 }
 
 const deleteBlogCategory = async (blogCategoryId) => {
@@ -31,4 +37,4 @@ const deleteBlogCategory = async (blogCategoryId) => {
     return updatedBlogCategory;
 };
 
-export { getBlogCategory, getBlogCategoryById, addNewBlogCategory, deleteBlogCategory };
+export { getBlogCategory, getBlogCategoryById, addNewBlogCategory, updateBlogCategory, deleteBlogCategory };

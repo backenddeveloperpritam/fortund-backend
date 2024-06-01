@@ -6,7 +6,7 @@ import httpStatus from 'http-status';
 
 
 const expertiesList = asyncHandler(async (req, res) => {
-   
+
     const result = await ExpertiesService.getExperties();
 
     return res.status(200).json(new ApiResponse(httpStatus.OK, result, "Experties fetched successfully"));
@@ -38,11 +38,11 @@ const updateExperties = asyncHandler(async (req, res) => {
     const { expertiseId } = req.params;
     const updateData = req.body;
 
-    const updatedSkill = await ExpertiesService.updateExperties(expertiseId, updateData);
-    if (!updatedSkill) {
+    const result = await ExpertiesService.updateExperties(expertiseId, updateData);
+    if (!result) {
         throw new ApiError(httpStatus.NOT_FOUND, "Experties Not Updated !");
     }
-    return res.status(200).json(new ApiResponse(200, updatedSkill, "Experties Updated successfully."));
+    return res.status(200).json(new ApiResponse(200, result, "Experties Updated successfully."));
 
 });
 

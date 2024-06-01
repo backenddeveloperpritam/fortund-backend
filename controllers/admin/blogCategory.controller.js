@@ -41,8 +41,10 @@ const addBlogCategory = asyncHandler(async (req, res) => {
 });
 
 const updateBlogCategoryById = asyncHandler(async (req, res) => {
-    const { title, status } = req.body;
-    const result = await categoryService.addNewBlogCategory(title, status);
+    const { blogCategoryId } = req.params;
+    const updateData = req.body;
+
+    const result = await categoryService.updateBlogCategory(blogCategoryId, updateData);
 
     return res
         .status(200)
