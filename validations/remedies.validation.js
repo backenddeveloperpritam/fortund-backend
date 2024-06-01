@@ -6,21 +6,21 @@ import { objectId } from "./custom.validation.js";
 const remediesSchema = Joi.object({
     title: Joi.string().required(),
     description: Joi.string().required(),
-    status: Joi.string().valid('Active', 'InActive').required(),
+    status: Joi.string().valid('Active', 'Inactive').required(),  // Correct capitalization for 'Inactive'
 });
 
 // Define the schema for getting remedies
 const getRemedies = {
     query: Joi.object({
-        title: Joi.string().required(),
-        sortBy: Joi.string().valid(...sortBy),
+        title: Joi.string().optional(),  // Make title optional for filtering
+        sortBy: Joi.string().valid(...sortBy).optional(),  // Make sortBy optional
     }),
 };
 
 // Define the schema for getting a single remedy by ID
 const getRemediesById = {
     params: Joi.object({
-        remediesId: Joi.string().custom(objectId),
+        remediesId: Joi.string().custom(objectId).required(),
     }),
 };
 
@@ -29,23 +29,24 @@ const addNewRemedies = {
     body: remediesSchema,
 };
 
-// Define the schema for updating remedies
 const updateRemedies = {
+    params: Joi.object({
+        remediesId: Joi.string().custom(objectId).required(),
+    }),
     body: remediesSchema,
 };
 
-// Define the schema for changing remedy status
 const changeStatus = {
     body: Joi.object({
-        remediesId: Joi.string().required(),
-        status: Joi.string().valid("Active", "InActive").required(),
+        remediesId: Joi.string().custom(objectId).required(),
+        status: Joi.string().valid('Active', 'InActive').required(),
     }),
 };
 
 // Define the schema for deleting remedies
 const deleteRemedies = {
     body: Joi.object({
-        remediesId: Joi.string().required(),
+        remediesId: Joi.string().custom(objectId).required(),
     }),
 };
 

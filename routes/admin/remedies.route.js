@@ -9,12 +9,12 @@ router.get("/remedies",
     RemediesController.remediesList
 );
 
-router.get("/remedies/:expertiseId",
+router.get("/remedies/:remediesId",
     validate(RemediesValidation.getRemediesById),
     RemediesController.getRemediesById
 );
 
-router.post("/add-new-remedies",
+router.post("/remedies/add-new",
     validate(RemediesValidation.addNewRemedies),
     RemediesController.addNewRemedies
 );

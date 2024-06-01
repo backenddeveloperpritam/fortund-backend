@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const remediesSchema = new mongoose.Schema({
     title: {
         type: String,
-        default: "",
+        required: true,
     },
     description: {
         type: String,
@@ -40,4 +40,4 @@ remediesSchema.pre('countDocuments', excludeDeletedRecords);
 
 const Remedies = mongoose.model('Remedies', remediesSchema);
 
-export default remediesSchema;
+export default Remedies;

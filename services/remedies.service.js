@@ -1,64 +1,68 @@
 import ApiError from "../utils/ApiError.js";
 import Remedies from "../models/adminModel/Remedies.js";
 
+// Get all remedies
 const getRemedies = async () => {
-
     const remedies = await Remedies.find({});
     return remedies;
 };
 
+// Get a single remedy by ID
 const getRemediesById = async (id) => {
-    const remedies = await Remedies.findOne({ _id: id });
+    const remedies = await Remedies.findById(id);
     if (!remedies) {
-        return null;
+        throw new ApiError(404, "Remedy not found");
     }
     return remedies;
 }
 
+// Add new remedies
 const addNewRemedies = async (body) => {
-    const { title, status } = body;
+    const { title, description, status } = body;
 
-    const existsRemedies = await Remedies.findOne({ title: new RegExp('^' + title + '$', 'i') });
-    console.log(existsRemedies);
+    const existsRemedies = await Remedies.findOne({ title: new RegExp(`^${title}$`, 'i') });
     if (existsRemedies) {
-        console.log("test");
-        throw new ApiError(400, "Remedies already exists");
+        throw new ApiError(400, "Remedy already exists");
     }
 
-    // Create new Remedies
-    const remedies = await Remedies.create({ title, status });
+    // Create new remedy
+    const remedies = await Remedies.create({ title, description, status });
     return remedies;
 };
 
-
-const updateRemedies = async (RemediesId, updateData) => {
-    const remedies = await Remedies.findByIdAndUpdate(RemediesId, updateData, { new: true });
+// Update an existing remedy
+const updateRemedies = async (remediesId, updateData) => {
+    const remedies = await Remedies.findByIdAndUpdate(remediesId, updateData, { new: true });
+    if (!remedies) {
+        throw new ApiError(404, "Remedy not found");
+    }
     return remedies;
 }
 
-
-
+// Change the status of a remedy
 const changeStatus = async (remediesId, status) => {
     const remedies = await Remedies.findByIdAndUpdate(
         remediesId,
         { status },
         { new: true }
     );
-
+    if (!remedies) {
+        throw new ApiError(404, "Remedy not found");
+    }
     return remedies;
 };
 
+// Soft delete a remedy
 const deleteRemedies = async (remediesId) => {
     const updatedRemedies = await Remedies.findByIdAndUpdate(
         remediesId,
-        { isDeleted: 1 },
+        { isDeleted: true },
         { new: true }
     );
-
+    if (!updatedRemedies) {
+        throw new ApiError(404, "Remedy not found");
+    }
     return updatedRemedies;
 };
-
-
-
 
 export { getRemedies, getRemediesById, addNewRemedies, updateRemedies, changeStatus, deleteRemedies };
