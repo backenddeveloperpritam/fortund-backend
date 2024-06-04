@@ -79,4 +79,17 @@ const deleteCountry = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, {}, "Country delleted successfully"));
 });
 
-export { countryList, countryById, addNewCountry, updateCountryById, deleteCountry,getStateByCountry };
+
+const changeStatus = asyncHandler(async (req, res) => {
+    const { countryId, status } = req.body;
+    const result = await countryService.changeStatus(countryId, status);
+
+    if (!result || result.length === 0) {
+        throw new ApiError(httpStatus.NOT_FOUND, " Country Not found");
+    }
+
+    return res.status(200).json(new ApiResponse(200, result, "Country Updated successfully"));
+})
+
+
+export { countryList, countryById, addNewCountry, updateCountryById, deleteCountry,changeStatus, getStateByCountry };

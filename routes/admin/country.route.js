@@ -31,6 +31,11 @@ router.post("/country/delete",
     countryController.deleteCountry
 );
 
+router.post("/country/change-status",
+    validate(countryValidation.changeStatus),
+    countryController.changeStatus
+);
+
 router.post("/country/state",
     validate(countryValidation.getStateByCountry),
     countryController.getStateByCountry

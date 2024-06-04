@@ -18,6 +18,13 @@ const getCountryId = {
     }),
 };
 
+const changeStatus = {
+    body: Joi.object().keys({
+        countryId: Joi.string().required(),
+        status: Joi.string().valid("Active", "InActive").required(),
+    }),
+};
+
 const addNewCountry = {
     body: Joi.object().keys({
         title: Joi.string().required(),
@@ -56,5 +63,6 @@ export {
     addNewCountry,
     updateCountry,
     deleteCountry,
-    getStateByCountry
+    getStateByCountry,
+    changeStatus
 };

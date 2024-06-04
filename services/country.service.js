@@ -25,7 +25,7 @@ const getCountry = async () => {
         }
     ]);
 
-    return countries; 
+    return countries;
 
 };
 
@@ -73,4 +73,14 @@ const deleteCountry = async (countryId) => {
     return country;
 };
 
-export { getCountry, getCountryById, addNewCountry, updateCountry, deleteCountry, getStateByCountry };
+const changeStatus = async (countryId, status) => {
+    const result = await Country.findByIdAndUpdate(
+        countryId,
+        { status },
+        { new: true }
+    );
+
+    return result;
+};
+
+export { getCountry, getCountryById, addNewCountry, updateCountry, deleteCountry, changeStatus, getStateByCountry };
