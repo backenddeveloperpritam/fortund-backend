@@ -40,7 +40,12 @@ const updateState = {
         status: Joi.string().valid("Active", "InActive").optional(),
     }),
 };
-
+const changeStatus = {
+    body: Joi.object().keys({
+        stateId: Joi.string().required(),
+        status: Joi.string().valid("Active", "InActive").required(),
+    }),
+};
 
 const deleteState = {
     body: Joi.object().keys({
@@ -54,5 +59,6 @@ export {
     addNewState,
     updateState,
     deleteState,
-    cityByStateId
+    cityByStateId,
+    changeStatus
 };

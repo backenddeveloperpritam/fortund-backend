@@ -49,4 +49,14 @@ const deleteState = async (stateId) => {
     return result;
 };
 
-export { getState, getStateById, addNewState, updateState, getCityByStateId, deleteState };
+const changeStatus = async (stateId, status) => {
+    const result = await State.findByIdAndUpdate(
+        stateId,
+        { status },
+        { new: true }
+    );
+
+    return result;
+};
+
+export { getState, getStateById, addNewState, updateState, getCityByStateId,changeStatus, deleteState };

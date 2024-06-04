@@ -61,5 +61,16 @@ const deleteCity = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, {}, "City delleted successfully"));
 });
 
+const changeStatus = asyncHandler(async (req, res) => {
+    const { cityId, status } = req.body;
+    const result = await cityService.changeStatus(cityId, status);
 
-export { cityList, cityById, addNewCity, updateCityById, deleteCity };
+    if (!result || result.length === 0) {
+        throw new ApiError(httpStatus.NOT_FOUND, " city Not found");
+    }
+
+    return res.status(200).json(new ApiResponse(200, result, "city Updated successfully"));
+})
+
+
+export { cityList, cityById, addNewCity, updateCityById, deleteCity, changeStatus };

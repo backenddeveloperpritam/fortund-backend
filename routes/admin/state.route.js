@@ -36,5 +36,10 @@ router.post("/state/delete",
     stateController.deleteState
 );
 
+router.post("/state/change-status",
+    validate(stateValidation.changeStatus),
+    stateController.changeStatus
+);
+
 
 export default router;

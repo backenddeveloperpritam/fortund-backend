@@ -31,5 +31,9 @@ router.post("/city/delete",
     cityController.deleteCity
 );
 
+router.post("/city/change-status",
+    validate(cityValidation.changeStatus),
+    cityController.changeStatus
+);
 
 export default router;

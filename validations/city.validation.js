@@ -46,11 +46,18 @@ const deleteCity = {
     }),
 };
 
+const changeStatus = {
+    body: Joi.object().keys({
+        cityId: Joi.string().required(),
+        status: Joi.string().valid("Active", "InActive").required(),
+    }),
+};
 export {
     searchCity,
     getCityId,
     addNewCity,
     updateCity,
     deleteCity,
-    cityByCityId
+    cityByCityId,
+    changeStatus
 };

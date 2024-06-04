@@ -53,4 +53,13 @@ const deleteCity = async (cityId) => {
     return result;
 };
 
-export { getCity, getCityById, addNewCity, updateCity, deleteCity };
+const changeStatus = async (cityId, status) => {
+    const result = await City.findByIdAndUpdate(
+        cityId,
+        { status },
+        { new: true }
+    );
+
+    return result;
+};
+export { getCity, getCityById, addNewCity, updateCity, deleteCity,changeStatus };
