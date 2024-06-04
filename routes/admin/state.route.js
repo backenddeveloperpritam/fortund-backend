@@ -16,18 +16,14 @@ router.get(
     stateController.stateById
 );
 
-router.post("/state/country-states",
-    validate(stateValidation.stateByCountryId),
-    stateController.stateByCountryId
+router.post("/state/city",
+    validate(stateValidation.cityByStateId),
+    stateController.cityByStateId
 );
 
 router.post("/add-new-state",
     validate(stateValidation.addNewState),
     stateController.addNewState
-);
-router.post("/add-new-state",
-    validate(stateValidation.stateByCountryId),
-    stateController.stateByCountryId
 );
 
 router.post("/state/update/:stateId",

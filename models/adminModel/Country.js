@@ -55,15 +55,15 @@ countrySchema.pre('findOneAndUpdate', function (next) {
     next();
 });
 
-const filterDeleted = function (next) {
-    this.where({ isDeleted: false });
-    next();
-};
+// const filterDeleted = function (next) {
+//     this.where({ isDeleted: false });
+//     next();
+// };
 
-countrySchema.pre('find', filterDeleted);
-countrySchema.pre('findOne', filterDeleted);
-countrySchema.pre('findOneAndUpdate', filterDeleted);
-countrySchema.pre('findById', filterDeleted);
+// countrySchema.pre('find', filterDeleted);
+// countrySchema.pre('findOne', filterDeleted);
+// countrySchema.pre('findOneAndUpdate', filterDeleted);
+// countrySchema.pre('findById', filterDeleted);
 
 const Country = mongoose.model('Country', countrySchema);
 

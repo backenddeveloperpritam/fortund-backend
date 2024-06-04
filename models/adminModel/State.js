@@ -47,10 +47,10 @@ const filterDeleted = function (next) {
 };
 
 
-stateSchema.pre('find', filterDeleted);
-stateSchema.pre('findOne', filterDeleted);
-stateSchema.pre('findOneAndUpdate', filterDeleted);
-stateSchema.pre('findById', filterDeleted);
+// stateSchema.pre('find', filterDeleted);
+// stateSchema.pre('findOne', filterDeleted);
+// stateSchema.pre('findOneAndUpdate', filterDeleted);
+// stateSchema.pre('findById', filterDeleted);
 
 const State = mongoose.model('State', stateSchema);
 

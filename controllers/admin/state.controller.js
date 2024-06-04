@@ -26,12 +26,10 @@ const stateById = asyncHandler(async (req, res) => {
         .json(
             new ApiResponse(200, result, "State fetch successfully")
         )
-
 });
 
-const stateByCountryId = asyncHandler(async (req, res) => {
-
-    const result = await stateService.getStateByCountryId(req.body.countryId);
+const cityByStateId = asyncHandler(async (req, res) => {
+    const result = await stateService.getCityByStateId(req.body.stateId);
     if (!result) {
         throw new ApiError(httpStatus.NOT_FOUND, "No State found with matching id");
     }
@@ -44,9 +42,8 @@ const stateByCountryId = asyncHandler(async (req, res) => {
 });
 
 const addNewState = asyncHandler(async (req, res) => {
-    const { title, country, status } = req.body;
-    console.log()
-    const result = await stateService.addNewState(title, country, status);
+    const { title, countryId, status } = req.body;
+    const result = await stateService.addNewState(title, countryId, status);
 
     return res
         .status(200)
@@ -78,4 +75,4 @@ const deleteState = asyncHandler(async (req, res) => {
 });
 
 
-export { stateList, stateById, addNewState, updateStateById, stateByCountryId, deleteState };
+export { stateList, stateById, addNewState, updateStateById, cityByStateId, deleteState };

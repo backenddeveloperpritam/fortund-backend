@@ -31,5 +31,10 @@ router.post("/country/delete",
     countryController.deleteCountry
 );
 
+router.post("/country/state",
+    validate(countryValidation.getStateByCountry),
+    countryController.getStateByCountry
+);
+
 
 export default router;

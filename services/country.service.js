@@ -1,15 +1,15 @@
 import Country from "../models/adminModel/Country.js";
 import ApiError from "../utils/ApiError.js";
+import State from "../models/adminModel/State.js";
 
 const getCountry = async () => {
     const countries = await Country.aggregate([
         {
-
             $lookup: {
-                from: 'State',
+                from: 'states',
                 let: { country: '$_id' },
                 pipeline: [
-                    { $match: { $expr: { $and: [{ $eq: ['$country', '$$country'] }, { $eq: ['$isDeleted', false] }] } } }
+                    { $match: { $expr: { $and: [{ $eq: ['$countryId', '$$country'] }, { $eq: ['$isDeleted', false] }] } } }
                 ],
                 as: 'states'
             }
@@ -24,8 +24,17 @@ const getCountry = async () => {
             }
         }
     ]);
-    return countries;
+
+    return countries; 
+
 };
+
+
+const getStateByCountry = async (body) => {
+    const { countryId } = body;
+    const country = State.find({ countryId: countryId });
+    return country;
+}
 
 const getCountryById = async (id) => {
     const country = Country.findOne({ _id: id });
@@ -64,4 +73,4 @@ const deleteCountry = async (countryId) => {
     return country;
 };
 
-export { getCountry, getCountryById, addNewCountry, updateCountry, deleteCountry };
+export { getCountry, getCountryById, addNewCountry, updateCountry, deleteCountry, getStateByCountry };

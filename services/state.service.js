@@ -1,8 +1,9 @@
 import State from "../models/adminModel/State.js";
 import ApiError from "../utils/ApiError.js";
+import City from "../models/adminModel/City.js";
 
 const getState = async () => {
-    const result = await State.find({}).populate({path: 'country',select: 'title'});
+    const result = await State.find({});
     return result;
 };
 
@@ -33,8 +34,8 @@ const updateState = async (stateId, updateData) => {
     return result;
 }
 
-const getStateByCountryId = async (countryId) => {
-    const restul = await State.find({ countryId: countryId });
+const getCityByStateId = async (stateId) => {
+    const restul = await City.find({ stateId: stateId });
     return restul;
 }
 
@@ -48,4 +49,4 @@ const deleteState = async (stateId) => {
     return result;
 };
 
-export { getState, getStateById, addNewState, updateState, getStateByCountryId, deleteState };
+export { getState, getStateById, addNewState, updateState, getCityByStateId, deleteState };

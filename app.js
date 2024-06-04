@@ -13,6 +13,7 @@ import ExpertiesRoute from "./routes/admin/expertise.route.js";
 import RemediesRoute from "./routes/admin/remedies.route.js";
 import CountryRoute from "./routes/admin/country.route.js";
 import StateRoute from "./routes/admin/state.route.js";
+import CityRoute from "./routes/admin/city.route.js";
 
 import cors from "cors";
 import { createServer } from "http";
@@ -53,6 +54,7 @@ app.use('/api/admin', ExpertiesRoute);
 app.use('/api/admin', RemediesRoute);
 app.use('/api/admin', CountryRoute);
 app.use('/api/admin', StateRoute);
+app.use('/api/admin', CityRoute);
 
 httpServer.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

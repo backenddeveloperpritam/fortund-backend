@@ -1,58 +1,56 @@
 import Joi from "joi";
-
 import { sortBy } from '../utils/values.js';
 import { objectId, customJoi } from "./custom.validation.js";
 
-const searchState = {
+const searchCity = {
     query: Joi.object().keys({
         title: Joi.string(),
         sortBy: Joi.string().valid(...sortBy),
     }),
 };
 
-
-const getStateId = {
+const getCityId = {
     params: Joi.object().keys({
-        stateId: Joi.string().custom(objectId),
+        cityId: Joi.string().custom(objectId),
     }),
 };
 
-const addNewState = {
+const addNewCity = {
     body: Joi.object().keys({
         title: Joi.string().required(),
-        countryId: Joi.string().required(),
+        stateId: Joi.string().required(),
         status: Joi.string().valid("Active", "InActive").optional(),
     }),
 };
-const cityByStateId = {
-    body: Joi.object().keys({
-        stateId: Joi.string().required(),
+const cityByCityId = {
+    params: Joi.object().keys({
+        cityId: Joi.string().custom(objectId).required(),
     }),
 };
 
-const updateState = {
+const updateCity = {
     params: Joi.object().keys({
-        stateId: Joi.string().custom(objectId).required(),
+        cityId: Joi.string().custom(objectId).required(),
     }),
     body: Joi.object().keys({
         title: Joi.string().required(),
-        countryId: Joi.string().required(),
+        stateId: Joi.string().required(),
         status: Joi.string().valid("Active", "InActive").optional(),
     }),
 };
 
 
-const deleteState = {
+const deleteCity = {
     body: Joi.object().keys({
-        stateId: Joi.string().required(),
+        cityId: Joi.string().required(),
     }),
 };
 
 export {
-    searchState,
-    getStateId,
-    addNewState,
-    updateState,
-    deleteState,
-    cityByStateId
+    searchCity,
+    getCityId,
+    addNewCity,
+    updateCity,
+    deleteCity,
+    cityByCityId
 };

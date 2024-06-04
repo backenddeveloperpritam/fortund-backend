@@ -25,6 +25,11 @@ const astrologerSchema = new mongoose.Schema({
     },
     set: capitalizeFirstLetter
   },
+  astroUniqueId: {
+    type: String,
+    unique: true,
+    required: true
+  },
   name: {
     type: String,
     required: [true, 'Name is required']
@@ -271,15 +276,36 @@ const astrologerSchema = new mongoose.Schema({
   }
 }, { collection: "Astrologer", timestamps: true });
 
-astrologerSchema.pre('find', function () {
-  this.where({ isDeleted: { $ne: true } });
-});
+
+const generateUniqueAstroUniqueId = async () => {
+  // Find the latest astroUniqueId from the database
+  const latestAstrologer = await Astrologer.findOne({}, {}, { sort: { 'createdAt': -1 } });
+
+  let latestAstroUniqueId = 0;
+  if (latestAstrologer && latestAstrologer.astroUniqueId) {
+    // Extract the numeric part of the astroUniqueId and increment it
+    const latestNumber = parseInt(latestAstrologer.astroUniqueId.match(/\d+/)[0]);
+    latestAstroUniqueId = latestNumber + 1;
+  }
+
+  // Format the new astroUniqueId
+  const newAstroUniqueId = `FortuneTalk${latestAstroUniqueId.toString().padStart(2, '0')}`;
+  return newAstroUniqueId;
+}
 
 astrologerSchema.pre("save", async function (next) {
+  if (!this.astroUniqueId) {
+    this.astroUniqueId = await generateUniqueAstroUniqueId();
+  }
   if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 10)
   next()
 })
+
+
+astrologerSchema.pre('find', function () {
+  this.where({ isDeleted: { $ne: true } });
+});
 
 astrologerSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password)

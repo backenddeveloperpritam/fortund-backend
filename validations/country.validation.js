@@ -44,10 +44,17 @@ const deleteCountry = {
     }),
 };
 
+const getStateByCountry = {
+    body: Joi.object().keys({
+        countryId: Joi.string().required(),
+    }),
+};
+
 export {
     searchCountry,
     getCountryId,
     addNewCountry,
     updateCountry,
-    deleteCountry
+    deleteCountry,
+    getStateByCountry
 };

@@ -14,10 +14,25 @@ const countryList = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, result, "Country fetched successfully"));
 });
 
+const getStateByCountry = asyncHandler(async (req, res) => {
+
+    const result = await countryService.getStateByCountry(req.body);
+
+    if (!result) {
+        throw new ApiError(httpStatus.NOT_FOUND, "No country found with matching id");
+    }
+
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(200, result, "country fetch successfully")
+        )
+})
+
 const countryById = asyncHandler(async (req, res) => {
 
-
     const result = await countryService.getCountryById(req.params.countryId);
+
     if (!result) {
         throw new ApiError(httpStatus.NOT_FOUND, "No country found with matching id");
     }
@@ -64,4 +79,4 @@ const deleteCountry = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, {}, "Country delleted successfully"));
 });
 
-export { countryList, countryById, addNewCountry, updateCountryById, deleteCountry };
+export { countryList, countryById, addNewCountry, updateCountryById, deleteCountry,getStateByCountry };
