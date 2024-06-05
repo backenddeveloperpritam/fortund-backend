@@ -3,8 +3,8 @@ import ApiError from "../utils/ApiError.js";
 import City from "../models/adminModel/City.js";
 
 const getState = async () => {
-    const result = await State.find({});
-    return result;
+    const result = await State.find().populate({path: 'countryId',select: 'title'});
+    return result;    
 };
 
 const getStateById = async (id) => {

@@ -19,8 +19,8 @@ const stateSchema = new mongoose.Schema(
             required: true
         },
         isDeleted: {
-            type: Boolean,
-            default: false
+            type: Number,
+            default: 0,
         }
     },
     { timestamps: true, collection: 'State' }
@@ -42,15 +42,14 @@ stateSchema.pre('findOneAndUpdate', function (next) {
 });
 
 const filterDeleted = function (next) {
-    this.where({ isDeleted: false });
+    this.where({ isDeleted: { $ne: 1 } });
     next();
 };
 
-
-// stateSchema.pre('find', filterDeleted);
-// stateSchema.pre('findOne', filterDeleted);
-// stateSchema.pre('findOneAndUpdate', filterDeleted);
-// stateSchema.pre('findById', filterDeleted);
+stateSchema.pre('find', filterDeleted);
+stateSchema.pre('findOne', filterDeleted);
+stateSchema.pre('findOneAndUpdate', filterDeleted);
+stateSchema.pre('findById', filterDeleted);
 
 const State = mongoose.model('State', stateSchema);
 
