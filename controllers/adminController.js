@@ -157,10 +157,8 @@ const addUser = async function (req, res) {
 // get all user
 const getAllUser = async function (req, res) {
   try {
-    // Fetch all skills from the database
     const users = await Users.find();
 
-    // Return the list of skills as a JSON response
     res.status(200).json({ success: true, users });
   } catch (error) {
     console.error("Error fetching Users:", error);

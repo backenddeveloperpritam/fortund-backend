@@ -42,6 +42,50 @@ const addNewAstrologer = asyncHandler(async (req, res) => {
 
 });
 
+const updateAstrologer = asyncHandler(async (req, res) => {
+    const newAstrologer = await astrologerService.updateAstrologer(req.body);
+    if (!newAstrologer) {
+        throw new ApiError(httpStatus.NOT_FOUND, "Astrologer Not Found !");
+    }
+    return res.status(200).json(new ApiResponse(200, newAstrologer, "Astrologer Updated successfully."));
+
+});
+
+const updateProfile = asyncHandler(async (req, res) => {
+    const newAstrologer = await astrologerService.updateProfileImage(req.body, req.file);
+    if (!newAstrologer) {
+        throw new ApiError(httpStatus.NOT_FOUND, "Astrologer Not found !");
+    }
+    return res.status(200).json(new ApiResponse(200, newAstrologer, "Astrologer profile updated successfully."));
+
+})
+
+const updateGallery = asyncHandler(async (req, res) => {
+    const newAstrologer = await astrologerService.updateProfileGalleryImage(req.body, req.files);
+    if (!newAstrologer) {
+        throw new ApiError(httpStatus.NOT_FOUND, "Astrologer Not found !");
+    }
+    return res.status(200).json(new ApiResponse(200, newAstrologer, "Astrologer Gallery updated successfully."));
+
+})
+
+const changeCallStatusAllAstrologer = asyncHandler(async (req, res) => {
+    const newAstrologer = await astrologerService.updateCallStatusAllAstrologer(req.body);
+    if (!newAstrologer) {
+        throw new ApiError(httpStatus.NOT_FOUND, "Something wents to wrong call Status  Not Updated !");
+    }
+    return res.status(200).json(new ApiResponse(200, newAstrologer, "Call Status updated successfully."));
+
+});
+
+const changeChatStatusAllAstrologer = asyncHandler(async (req, res) => {
+    const newAstrologer = await astrologerService.updateChatStatusAllAstrologer(req.body);
+    if (!newAstrologer) {
+        throw new ApiError(httpStatus.NOT_FOUND, "Something wents to wrong chat Status  Not Updated !");
+    }
+    return res.status(200).json(new ApiResponse(200, newAstrologer, "Chat Status  updated successfully."));
+
+});
 
 
 const changeCallStatus = asyncHandler(async (req, res) => {
@@ -74,8 +118,26 @@ const changeStatus = asyncHandler(async (req, res) => {
         throw new ApiError(httpStatus.NOT_FOUND, "No Astrologer found");
     }
 
-    return res.status(200).json(new ApiResponse(200, result, "Astrologers fetched successfully"));
+    return res.status(200).json(new ApiResponse(200, result, "Astrologers Blocked successfully"));
+})
+
+const deleteAstrologer = asyncHandler(async (req, res) => {
+    const { astrologerId } = req.body;
+
+    const result = await astrologerService.deleteAstrologer(astrologerId);
+    if (!result || result.length === 0) {
+        throw new ApiError(httpStatus.NOT_FOUND, "Astrologer Not found");
+    }
+
+    return res.status(200).json(new ApiResponse(200, result, "Astrologers deleted successfully"));
 })
 
 
-export { astrologerList, getAstrologerById, addNewAstrologer, changeCallStatus, changeChatStatus, changeStatus };
+export {
+    astrologerList, getAstrologerById, addNewAstrologer,
+    changeCallStatus, changeChatStatus, changeStatus,
+    updateProfile, updateGallery, updateAstrologer,
+    changeCallStatusAllAstrologer,
+    changeChatStatusAllAstrologer,
+    deleteAstrologer
+};

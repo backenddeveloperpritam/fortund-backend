@@ -29,6 +29,8 @@ router.post(
     astrologerController.changeCallStatus
 );
 
+
+
 router.post(
     "/astrologer-change-chat-status",
     validate(astrologerValidation.changeChatStatus),

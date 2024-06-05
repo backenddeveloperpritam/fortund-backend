@@ -44,6 +44,9 @@ const astrologerLogin = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Your account has been Blocked, please contact admin support.");
     }
 
+    await astrologerService.logAstrologerLogin(astrologer._id, req.body.latitude, req.body.longitude);
+
+
     const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(astrologer._id, fcmToken)
 
     const loggedInAstrologer = await astrologerService.getAstrologerById(astrologer._id);
@@ -71,6 +74,7 @@ const astrologerLogin = asyncHandler(async (req, res) => {
         )
 
 });
+
 
 
 const logoutAstrologer = asyncHandler(async (req, res) => {
@@ -103,7 +107,7 @@ const astrologerList = asyncHandler(async (req, res) => {
 const changeCallStatus = asyncHandler(async (req, res) => {
     const { astrologerId, callStatus } = req.body;
 
-    const result = await astrologerService.changeCallStatus(astrologerId,callStatus);
+    const result = await astrologerService.changeCallStatus(astrologerId, callStatus);
     if (!result || result.length === 0) {
         throw new ApiError(httpStatus.NOT_FOUND, "No Astrologer found");
     }
@@ -114,7 +118,7 @@ const changeCallStatus = asyncHandler(async (req, res) => {
 const changeChatStatus = asyncHandler(async (req, res) => {
     const { astrologerId, chatStatus } = req.body;
 
-    const result = await astrologerService.changeChatStatus(astrologerId,chatStatus);
+    const result = await astrologerService.changeChatStatus(astrologerId, chatStatus);
     if (!result || result.length === 0) {
         throw new ApiError(httpStatus.NOT_FOUND, "No Astrologer found");
     }
@@ -122,4 +126,4 @@ const changeChatStatus = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, result, "Astrologers fetched successfully"));
 })
 
-export { astrologerLogin, logoutAstrologer, astrologerList,changeCallStatus,changeChatStatus };
+export { astrologerLogin, logoutAstrologer, astrologerList, changeCallStatus, changeChatStatus };

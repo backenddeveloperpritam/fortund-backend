@@ -1,6 +1,6 @@
 import ApiError from "../../utils/ApiError.js";
 import Astrologer from "../../models/adminModel/Astrologer.js";
-
+import AstrologerLoginLog from "../../models/adminModel/AstrologerLoginLogs.js"
 
 const getAstrologer = async (title) => {
     try {
@@ -24,6 +24,17 @@ const loginAstrologer = async (email, password) => {
     return astrologer;
 
 };
+
+const logAstrologerLogin = async (astrologerId, latitude, longitude) => {
+    const loginLog = new AstrologerLoginLog({
+        astrologerId,
+        loginTime: new Date(),
+        latitude,
+        longitude
+    });
+    await loginLog.save();
+};
+
 
 const logoutAstrologer = async (astrologerId) => {
     await Astrologer.findByIdAndUpdate(
@@ -82,4 +93,4 @@ const changeChatStatus = async (astrologerId, status) => {
     return astrologer;
 };
 
-export { getAstrologer, loginAstrologer, logoutAstrologer, getAstrologerById, changeCallStatus, changeChatStatus };
+export { getAstrologer, loginAstrologer, logoutAstrologer, getAstrologerById, changeCallStatus, changeChatStatus, logAstrologerLogin };

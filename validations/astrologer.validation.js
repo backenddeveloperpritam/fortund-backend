@@ -73,16 +73,71 @@ const addNewAstrologer = Joi.object({
 
 const updateAstrologer = {
     body: Joi.object().keys({
-        title: Joi.string().required(),
-        status: Joi.string().valid("Active", "Blocked").optional(),
+        astrologerId: Joi.string().required(),
+        displayName: Joi.string().required(),
+        name: Joi.string().required(),
+        email: Joi.string().email().required(),
+        password: Joi.string().required(),
+        phoneCode: Joi.string().required(),
+        phoneNumber: Joi.string().required(),
+        gender: Joi.string().valid('Male', 'Female', 'Other').required(),
+        dateOfBirth: Joi.date().required(),
+        experience: Joi.string().required(),
+        language: Joi.array().items(Joi.string()).required(),
+        address: Joi.string().required(),
+        currencyType: Joi.string().valid("INR", "USD").required(),
+        currencyValue: Joi.number().required(),
+        country: Joi.string().required(),
+        state: Joi.string().required(),
+        city: Joi.string().required(),
+        zipCode: Joi.number().required(),
+        about: Joi.string().required(),
+        educationQualification: Joi.string().optional(),
+        astrologyQualification: Joi.string().optional(),
+        follower_count: Joi.number().optional(),
+        rating: Joi.number().optional(),
+        bankAcountNumber: Joi.string().required(),
+        bankName: Joi.string().required(),
+        accountType: Joi.string().required(),
+        ifscCode: Joi.string().required(),
+        accouuntHolderName: Joi.string().required(),
+        addharNumber: Joi.number().required(),
+        panNumber: Joi.string().required(),
+        chatPrice: Joi.number().required(),
+        companyChatPrice: Joi.number().required(),
+        callPrice: Joi.number().required(),
+        companyCallPrice: Joi.number().required(),
+        liveVideoPrice: Joi.number().required(),
+        companyLiveVideoPrice: Joi.number().required(),
+        liveCallPrice: Joi.number().required(),
+        companyLiveCallPrice: Joi.number().required(),
+        skill: Joi.array().items(Joi.string()).required(),
+        expertise: Joi.array().items(Joi.string()).required(),
+        remedies: Joi.array().items(Joi.string()).optional(),
+        astrologerType: Joi.string().valid("Consultation", "Teaching", "Pandit", "All").required(),
+        status: Joi.string().valid("Active", "Blocked").required(),
     }),
 };
+
 const changeCallStatus = {
     body: Joi.object().keys({
         astrologerId: Joi.string().required(),
         callStatus: Joi.string().valid("Offline", "Online", "Busy").required(),
     }),
 };
+
+const changeCallStatusAllAstrologer = {
+    body: Joi.object().keys({
+        callStatus: Joi.string().valid("Offline", "Online").required(),
+    }),
+}
+
+const changeChatStatusAllAstrologer = {
+    body: Joi.object().keys({
+        chatStatus: Joi.string().valid("Offline", "Online").required(),
+    }),
+}
+
 const changeChatStatus = {
     body: Joi.object().keys({
         astrologerId: Joi.string().required(),
@@ -97,18 +152,22 @@ const changeStatus = {
     }),
 };
 
+const deleteAstrologer = {
+    body: Joi.object().keys({
+        astrologerId: Joi.string().required(),
+    }),
+};
+
 
 const loginAstrologer = {
     body: Joi.object().keys({
         email: Joi.string().email().required(),
         password: Joi.string().required(),
-        fcmToken: Joi.string().required()
+        fcmToken: Joi.string().required(),
+        latitude: Joi.string().required(),
+        longitude: Joi.string().required(),
     })
 };
-
-
-
-
 
 
 export {
@@ -119,5 +178,8 @@ export {
     loginAstrologer,
     changeCallStatus,
     changeChatStatus,
-    changeStatus
+    changeStatus,
+    changeCallStatusAllAstrologer,
+    changeChatStatusAllAstrologer,
+    deleteAstrologer
 };
