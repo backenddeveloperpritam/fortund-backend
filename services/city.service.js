@@ -2,7 +2,7 @@ import ApiError from "../utils/ApiError.js";
 import City from "../models/adminModel/City.js";
 
 const getCity = async () => {
-    const result = await City.find({});
+    const result = await City.find().populate({path: 'stateId',select: 'title'});
     return result;
 };
 
@@ -62,4 +62,4 @@ const changeStatus = async (cityId, status) => {
 
     return result;
 };
-export { getCity, getCityById, addNewCity, updateCity, deleteCity,changeStatus };
+export { getCity, getCityById, addNewCity, updateCity, deleteCity, changeStatus };

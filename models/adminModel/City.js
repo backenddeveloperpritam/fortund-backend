@@ -18,8 +18,8 @@ const citySchema = new mongoose.Schema(
             required: true
         },
         isDeleted: {
-            type: Boolean,
-            default: false
+            type: Number,
+            default: 0,
         }
     },
     { timestamps: true, collection: 'City' }
@@ -39,9 +39,9 @@ citySchema.pre('findOneAndUpdate', function (next) {
     }
     next();
 });
-// Pre-hook for all find queries to filter out deleted documents
+
 const filterDeleted = function (next) {
-    this.where({ isDeleted: false });
+    this.where({ isDeleted: { $ne: 1 } });
     next();
 };
 

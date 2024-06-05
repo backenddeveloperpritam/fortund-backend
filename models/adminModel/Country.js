@@ -19,9 +19,9 @@ const countrySchema = new mongoose.Schema(
             enum: ["Active", "InActive"],
             required: true
         },
-        isDeleted: {
-            type: Boolean,
-            default: false
+        isDelete: {
+            type: Number,
+            default: 0,
         }
     },
     { timestamps: true, collection: 'Country' }
@@ -55,15 +55,15 @@ countrySchema.pre('findOneAndUpdate', function (next) {
     next();
 });
 
-// const filterDeleted = function (next) {
-//     this.where({ isDeleted: false });
-//     next();
-// };
+const filterDeleted = function (next) {
+    this.where({ isDelete: { $ne: 1 } });
+    next();
+};
 
-// countrySchema.pre('find', filterDeleted);
-// countrySchema.pre('findOne', filterDeleted);
-// countrySchema.pre('findOneAndUpdate', filterDeleted);
-// countrySchema.pre('findById', filterDeleted);
+countrySchema.pre('find', filterDeleted);
+countrySchema.pre('findOne', filterDeleted);
+countrySchema.pre('findOneAndUpdate', filterDeleted);
+countrySchema.pre('findById', filterDeleted);
 
 const Country = mongoose.model('Country', countrySchema);
 

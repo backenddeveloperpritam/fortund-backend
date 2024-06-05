@@ -5,11 +5,23 @@ import State from "../models/adminModel/State.js";
 const getCountry = async () => {
     const countries = await Country.aggregate([
         {
+            $match: { isDelete: 0 }
+        },
+        {
             $lookup: {
                 from: 'states',
-                let: { country: '$_id' },
+                let: { countryId: '$_id' },
                 pipeline: [
-                    { $match: { $expr: { $and: [{ $eq: ['$countryId', '$$country'] }, { $eq: ['$isDeleted', false] }] } } }
+                    {
+                        $match: {
+                            $expr: {
+                                $and: [
+                                    { $eq: ['$countryId', '$$countryId'] },
+                                    { $eq: ['$isDelete', 0] }
+                                ]
+                            }
+                        }
+                    }
                 ],
                 as: 'states'
             }
@@ -66,7 +78,7 @@ const updateCountry = async (countryId, updateData) => {
 const deleteCountry = async (countryId) => {
     const country = await Country.findByIdAndUpdate(
         countryId,
-        { isDeleted: 1 },
+        { isDelete: 1 },
         { new: true }
     );
 

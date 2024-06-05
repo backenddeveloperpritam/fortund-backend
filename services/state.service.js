@@ -59,4 +59,4 @@ const changeStatus = async (stateId, status) => {
     return result;
 };
 
-export { getState, getStateById, addNewState, updateState, getCityByStateId,changeStatus, deleteState };
+export { getState, getStateById, addNewState, updateState, getCityByStateId, changeStatus, deleteState };
